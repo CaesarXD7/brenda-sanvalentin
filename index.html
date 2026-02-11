@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Para mi doctora favorita ♡ Brenda</title>
+    <title>Para mi médica favorita ♡ mi Brenda Alison</title>
+
     <style>
         * {
             margin: 0;
@@ -13,73 +14,79 @@
         }
 
         body {
-            height: 100vh;
-            background: linear-gradient(135deg, #fff0f5, #ffe4e1, #ffb6c1);
+            min-height: 100vh;
             font-family: "Segoe UI", system-ui, sans-serif;
-            overflow: hidden;
+            background: linear-gradient(135deg, #fff0f5, #ffe4e1, #ffb6c1);
+
             display: flex;
             align-items: center;
             justify-content: center;
+
+            overflow-x: hidden;
+            overflow-y: auto;
+
             color: #c2185b;
-            position: relative;
+            padding: 20px;
         }
 
+        /* CONTENEDOR */
         .container {
-            position: relative;
             text-align: center;
-            padding: 30px 20px;
-            max-width: 90%;
+            width: 100%;
+            max-width: 600px;
+            padding: 25px 18px;
             z-index: 5;
-            transition: all 0.6s ease;
+            transition: .6s ease;
         }
 
         .container.faded {
-            opacity: 0.4;
-            transform: scale(0.95);
+            opacity: .4;
+            transform: scale(.95);
         }
 
+        /* IMAGEN */
         .sticker {
-            width: 300px;
-            height: auto;
-            filter: drop-shadow(0 15px 25px rgba(255, 105, 180, 0.5));
-            animation: float 6s ease-in-out infinite;
+            width: 100%;
+            max-width: 280px;
             margin: 20px auto;
-            display: block;
             border-radius: 20px;
+            filter: drop-shadow(0 15px 25px rgba(255, 105, 180, 0.4));
+            animation: float 6s ease-in-out infinite;
         }
 
+        /* TEXTO RESPONSIVE */
         h1 {
+            font-size: clamp(1.6rem, 5vw, 2.5rem);
             color: #e91e63;
-            font-size: 2.5rem;
             margin-bottom: 15px;
-            text-shadow: 0 4px 15px rgba(233, 30, 99, 0.4);
-            animation: pulse 3s infinite;
         }
 
         .message {
-            font-size: 1.3rem;
+            font-size: clamp(1rem, 3.8vw, 1.3rem);
             line-height: 1.6;
             margin: 20px 0 30px;
             opacity: 0;
             transform: translateY(40px);
-            animation: appear 1.6s forwards 0.6s;
+            animation: appear 1.4s forwards .5s;
         }
 
+        /* BOTONES */
         .buttons {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
             opacity: 0;
-            animation: appear 1.8s forwards 1.2s;
-            margin: 30px 0;
+            animation: appear 1.6s forwards 1s;
         }
 
         .btn {
-            padding: 14px 35px;
-            font-size: 1.3rem;
-            border: none;
+            padding: 12px 30px;
+            font-size: clamp(1rem, 4vw, 1.2rem);
             border-radius: 50px;
+            border: none;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-            transition: all 0.3s;
-            margin: 0 12px;
+            transition: .3s;
         }
 
         .btn-yes {
@@ -87,33 +94,24 @@
             color: white;
         }
 
-        .btn-yes:hover {
-            transform: scale(1.08);
-            background: #d81b60;
-        }
-
         .btn-no {
             background: #f06292;
             color: white;
         }
 
-        .btn-no:hover {
+        .btn:hover {
             transform: scale(1.08);
-            background: #ec407a;
         }
 
-        /* Burbujas flotantes centradas */
+        /* BURBUJAS */
         .bubble-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            inset: 0;
             display: none;
             align-items: center;
             justify-content: center;
+            padding: 20px;
             z-index: 20;
-            pointer-events: none;
         }
 
         .bubble-overlay.show {
@@ -121,104 +119,93 @@
         }
 
         .bubble {
-            position: relative;
-            max-width: 85%;
-            padding: 30px 35px;
-            background: rgba(255, 182, 193, 0.95);
-            border-radius: 35px;
-            box-shadow: 0 15px 40px rgba(233, 30, 99, 0.4);
-            font-size: 1.4rem;
-            color: #880e4f;
+            background: rgba(255, 182, 193, .96);
+            border-radius: 30px;
+            padding: 22px;
+
+            max-width: 520px;
+            /* 👈 límite bonito para desktop */
+            width: 100%;
+
+            font-size: clamp(1rem, 3.8vw, 1.3rem);
+
+            display: flex;
+            /* 👈 magia */
+            flex-direction: column;
+            align-items: center;
+            /* 👈 centra todo */
+            justify-content: center;
             text-align: center;
+
             opacity: 0;
-            transform: scale(0.6) translateY(80px);
-            transition: all 0.7s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: auto;
+            transform: scale(.6);
+            transition: .6s;
         }
 
         .bubble.show-bubble {
             opacity: 1;
-            transform: scale(1) translateY(0);
-        }
-
-        /* Cola de burbuja (triángulo abajo) */
-        .bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -18px;
-            left: 50%;
-            transform: translateX(-50%);
-            border: 18px solid transparent;
-            border-top-color: rgba(255, 182, 193, 0.95);
+            transform: scale(1);
         }
 
         .bubble img {
-            width: 260px;
-            height: auto;
-            margin: 20px auto 10px;
+            width: 100%;
+            max-width: 240px;
+            margin: 15px auto;
             display: block;
+        }
+
+        .bubble-title {
+            font-size: clamp(1.3rem, 4vw, 1.8rem);
+            font-weight: 700;
+            color: #c2185b;
+            margin-bottom: 10px;
+        }
+
+        .bubble-text {
+            margin: 10px 0;
+            line-height: 1.6;
+            opacity: .95;
+        }
+
+        .bubble-highlight {
+            margin-top: 12px;
+            font-weight: 600;
+            color: #ad1457;
+            background: rgba(255, 255, 255, .35);
+            padding: 10px 15px;
             border-radius: 18px;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
         }
 
         .change-btn {
-            margin-top: 25px;
-            padding: 14px 35px;
-            font-size: 1.3rem;
+            margin-top: 15px;
+            padding: 10px 25px;
+            border-radius: 30px;
+            border: none;
             background: #e91e63;
             color: white;
-            border: none;
-            border-radius: 50px;
             cursor: pointer;
-            box-shadow: 0 8px 25px rgba(233, 30, 99, 0.4);
-            transition: all 0.3s;
         }
 
-        .change-btn:hover {
-            transform: scale(1.08);
-            background: #d81b60;
-        }
-
+        /* CORAZONES */
         .small-hearts {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
+            position: fixed;
+            inset: 0;
             pointer-events: none;
             overflow: hidden;
             z-index: 1;
         }
 
-        .heart {
+        .heart,
+        .confetti {
             position: absolute;
-            font-size: 2rem;
-            color: #ff4081;
+            font-size: 1.5rem;
             animation: rise linear infinite;
-            opacity: 0.8;
         }
 
+        /* ANIMACIONES */
         @keyframes float {
-
-            0%,
-            100% {
-                transform: translateY(0) rotate(0deg);
-            }
-
             50% {
-                transform: translateY(-25px) rotate(8deg);
-            }
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.07);
+                transform: translateY(-20px);
             }
         }
 
@@ -231,13 +218,28 @@
 
         @keyframes rise {
             0% {
-                transform: translateY(120vh) scale(0.5);
-                opacity: 0.7;
+                transform: translateY(120vh);
+                opacity: 1;
             }
 
             100% {
-                transform: translateY(-30vh) scale(1.5);
+                transform: translateY(-20vh);
                 opacity: 0;
+            }
+        }
+
+        /* MÓVIL */
+        @media (max-width:480px) {
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            .sticker {
+                max-width: 220px;
             }
         }
     </style>
@@ -248,95 +250,112 @@
     <div class="small-hearts" id="hearts"></div>
 
     <div class="container" id="mainContent">
-        <img src="https://i.pinimg.com/originals/09/36/78/0936780fe907a35e33b382bbd92b5592.gif"
-            alt="Bubu Dudu abrazados" class="sticker">
+
+        <img src="https://i.pinimg.com/originals/09/36/78/0936780fe907a35e33b382bbd92b5592.gif" class="sticker">
 
         <h1>¡Feliz San Valentín, Brenda mi vida! ♡</h1>
 
         <p class="message">
-            Sé que el 14 no voy a poder verte, pero también sé que estás dando lo mejor de ti para cuidar a tus
-            pacientes y estudiando como la crack en medicina que eres 💉📚<br><br>
-            Te prometo que máximo el 21 estoy ahí contigo, sin excusas ni peros.<br><br>
-            Eres mi persona favorita en todo el universo,<br>
-            mi motivo para sonreír hasta cuando estoy muerto de cansancio,<br>
-            y la razón por la que cuento los días para verte otra vez.<br><br>
-            <strong>Te extraño un montón y te amo demasiado</strong> 💗
+            Sé que el 14 no voy a poder verte, pero sé que estás dando lo mejor de ti 💉📚<br><br>
+            Pero estaré contigo antes del 21 sí o sí.<br><br>
+            Eres mi persona favorita del universo.<br>
+            Te extraño un montón y te amo demasiado, ¿Me esperas unos días más? 💗
         </p>
 
         <div class="buttons" id="buttons">
             <button class="btn btn-yes" id="yesBtn">Sí, te espero 💕</button>
-            <button class="btn btn-no" id="noBtn">No :c</button>
+            <button class="btn btn-no" id="noBtn">No 🥺</button>
         </div>
     </div>
 
-    <!-- Burbuja para Sí -->
+    <!-- YES -->
     <div class="bubble-overlay" id="yesOverlay">
         <div class="bubble" id="yesBubble">
-            <strong>¡Yei! Mi doctora más linda dijo que sí ♡</strong><br><br>
-            El 21 te recojo y la pasamos juntos sin importar nada,<br>
-            cena rica, risas, abrazos... y tu recompensa especial que vengo guardando solo para ti 😏<br><br>
-            Va a ser inolvidable, prepárate Brenda mía. Te amo infinito 💗
-            <img src="https://i.pinimg.com/originals/24/0c/93/240c9373c332efbe2b25813e212767de.gif"
-                alt="Felices juntos">
+
+            <h2 class="bubble-title">¡Yei! Mi doctora dijo que sí ♡</h2>
+
+            <p class="bubble-text">
+                El 21 te recojo y la pasamos juntos sin importar nada.
+                Cena rica, risas infinitas, abrazos que curan el alma…
+                y esa sorpresa especial que guardé solo para ti 😏
+            </p>
+
+            <p class="bubble-highlight">
+                Prepárate, porque antes del 21 te voy a llenar
+                de abrazos, besos y muchísimo amor 💗
+            </p>
+
+            <img src="https://i.pinimg.com/originals/24/0c/93/240c9373c332efbe2b25813e212767de.gif" alt="Abrazos">
+
         </div>
     </div>
 
-    <!-- Burbuja para No -->
+    <!-- NO -->
     <div class="bubble-overlay" id="noOverlay">
         <div class="bubble" id="noBubble">
             <strong>Ve cómo eres... :c</strong><br><br>
-            ¿En serio no me vas a esperar? Esperame poquito más mi amor, porfi porfi :c<br>
-            Sabes que el 21 voy volando a verte y te compenso todo... no me dejes con el corazón roto 💔<br><br>
-            Te amo mucho Brenda, di que sí pe :c
+            ¿En serio no me vas a esperar? Esperame poquito más mi amor, porfi porfi 🥺<br>
+            Sabes que antes del 21 voy volando a verte y te compenso todo... no me dejes con el corazón roto 💔<br><br>
+            Te amo mucho mi Brenda, di que sí pe :c
             <img src="https://i.pinimg.com/originals/00/8f/a7/008fa781139bcbb1fdd88de5ea03837e.gif" alt="Puchero sad">
             <button class="change-btn" id="changeToYes">Ya está bien, acepto 😘</button>
         </div>
     </div>
 
     <script>
-        // Corazoncitos flotando
+        const isMobile = window.innerWidth < 600;
+
+        const heartsContainer = document.getElementById("hearts");
+
         function createHeart() {
             const heart = document.createElement("div");
-            heart.classList.add("heart");
-            heart.innerHTML = ["💗", "❤️", "💖", "💕", "♡", "💘"][Math.floor(Math.random() * 6)];
+            heart.className = "heart";
+            heart.innerHTML = ["💗", "💕", "💖", "❤️"][Math.floor(Math.random() * 4)];
             heart.style.left = Math.random() * 100 + "vw";
-            const size = Math.random() * 1.5 + 1;
-            heart.style.fontSize = size + "rem";
-            heart.style.animationDuration = Math.random() * 10 + 8 + "s";
-            heart.style.animationDelay = Math.random() * 4 + "s";
-            document.getElementById("hearts").appendChild(heart);
-            setTimeout(() => heart.remove(), 16000);
+            heart.style.animationDuration = (Math.random() * 6 + 6) + "s";
+            heartsContainer.appendChild(heart);
+            setTimeout(() => heart.remove(), 12000);
         }
-        setInterval(createHeart, 500);
-        for (let i = 0; i < 12; i++) setTimeout(createHeart, i * 350);
 
-        // Lógica
-        const mainContent = document.getElementById("mainContent");
-        const buttonsDiv = document.getElementById("buttons");
-        const yesBtn = document.getElementById("yesBtn");
-        const noBtn = document.getElementById("noBtn");
+        setInterval(createHeart, isMobile ? 900 : 500);
+
+        /* CONFETTI */
+        function confetti() {
+            for (let i = 0; i < 25; i++) {
+                const c = document.createElement("div");
+                c.className = "confetti";
+                c.innerHTML = "✨";
+                c.style.left = Math.random() * 100 + "vw";
+                c.style.animationDuration = "3s";
+                heartsContainer.appendChild(c);
+                setTimeout(() => c.remove(), 3000);
+            }
+        }
+
+        const main = document.getElementById("mainContent");
         const yesOverlay = document.getElementById("yesOverlay");
         const noOverlay = document.getElementById("noOverlay");
         const yesBubble = document.getElementById("yesBubble");
         const noBubble = document.getElementById("noBubble");
-        const changeBtn = document.getElementById("changeToYes");
 
-        function showBubble(overlay, bubble) {
-            mainContent.classList.add("faded");
-            buttonsDiv.style.display = "none";
-            overlay.style.display = "flex";
-            setTimeout(() => bubble.classList.add("show-bubble"), 100);
+        function showBubble(overlay, bubble, isYes = false) {
+            main.classList.add("faded");
+            overlay.classList.add("show");
+
+            setTimeout(() => {
+                bubble.classList.add("show-bubble");
+                if (isYes) confetti();
+            }, 100);
         }
 
-        yesBtn.addEventListener("click", () => showBubble(yesOverlay, yesBubble));
-
-        noBtn.addEventListener("click", () => showBubble(noOverlay, noBubble));
-
-        changeBtn.addEventListener("click", () => {
-            noOverlay.style.display = "none";
-            showBubble(yesOverlay, yesBubble);
-        });
+        document.getElementById("yesBtn").onclick = () => showBubble(yesOverlay, yesBubble, true);
+        document.getElementById("noBtn").onclick = () => showBubble(noOverlay, noBubble);
+        document.getElementById("changeToYes").onclick = () => {
+            noOverlay.classList.remove("show");
+            showBubble(yesOverlay, yesBubble, true);
+        };
     </script>
+
 </body>
 
 </html>
